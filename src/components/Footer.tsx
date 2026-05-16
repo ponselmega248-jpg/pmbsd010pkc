@@ -12,21 +12,16 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               {settings?.logoSekolah ? (
+                <img src={settings.logoSekolah} alt="Logo Sekolah" className="h-10 w-auto object-contain bg-white p-1 rounded" referrerPolicy="no-referrer" />
+              ) : (
                   <img
-                    src={settings.logoSekolah}
-                    alt="Logo Sekolah"
-                    className="h-10 w-auto object-contain bg-white p-1 rounded"
-                    referrerPolicy="no-referrer"
-                  />
-                ) : (
-                  <img
-                    src="/sdn010 logo.png"
+                    src="/sdn010-logo.png"
                     alt="Logo"
-                    className="h-10 w-10 rounded-lg object-cover"
+                    className="h-10 w-10 bg-white p-1 rounded-lg object-contain"
                   />
-                )}
+              )}
               <span className="font-bold text-xl tracking-tight text-white">
-                {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}
+                {settings?.namaSekolah || 'SDN 010 Pangkalan kerinci'}
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
@@ -38,7 +33,7 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Tautan Cepat</h3>
             <ul className="space-y-2 text-sm">
               <li><Link to="/" className="hover:text-blue-400 transition-colors">Beranda</Link></li>
-              <li><Link to="/daftar" className="hover:text-blue-400 transition-colors">Pendaftaran SPMB</Link></li>
+              <li><Link to="/daftar" className="hover:text-blue-400 transition-colors">Pendaftaran PPDB</Link></li>
               <li><Link to="/admin" className="hover:text-blue-400 transition-colors">Login Admin</Link></li>
             </ul>
           </div>
@@ -48,22 +43,22 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-blue-500 shrink-0 mt-0.5" />
-                <span>{settings?.alamat || 'Jl. Pendidikan No. 123, Kota Pelajar, Indonesia 12345'}</span>
+                <span>{settings?.alamat || 'Jl. Bumi Lago Permai, Makmur, Kec. Pangkalan Kerinci, Kabupaten Pelalawan, Riau 28654'}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-blue-500 shrink-0" />
-                <span>{settings?.telepon || '(021) 1234-5678'}</span>
+                <span>{settings?.telepon || '+6285211058381'}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-blue-500 shrink-0" />
-                <span>{settings?.email || 'info@sdnharapanbangsa.sch.id'}</span>
+                <span>{settings?.email || 'admin@sdn010pangkalankerinci.sch.id'}</span>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="mt-12 pt-8 border-t border-slate-800 text-center text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center">
-          <p>&copy; {new Date().getFullYear()} {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}. Hak Cipta Dilindungi.</p>
+          <p>&copy; {new Date().getFullYear()} {settings?.namaSekolah || 'SDN 010 Pangkalan kerinci'}. Hak Cipta Dilindungi.</p>
           <p className="mt-2 md:mt-0">Sistem PPDB Online Terintegrasi</p>
         </div>
       </div>
