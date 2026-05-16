@@ -68,13 +68,31 @@ export default function MapPicker({ onLocationSelect, initialLocation }: MapPick
         Gunakan Lokasi Saat Ini
       </button>
       <div className="h-[300px] w-full rounded-lg overflow-hidden border border-slate-300 z-0 relative">
-        <MapContainer key={mapKey} center={[center.lat, center.lng]} zoom={15} scrollWheelZoom={false} className="h-full w-full z-0">
-        <TileLayer
-          attribution='&copy; Esri'
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-        />
-          <LocationMarker onLocationSelect={onLocationSelect} initialLocation={center} />
-        </MapContainer>
+<MapContainer
+  key={mapKey}
+  center={[center.lat, center.lng]}
+  zoom={15}
+  scrollWheelZoom={false}
+  className="h-full w-full z-0"
+>
+  {/* Satellite Layer */}
+  <TileLayer
+    attribution='&copy; Esri'
+    url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+  />
+
+  {/* Labels Layer */}
+  <TileLayer
+    attribution='&copy; OpenStreetMap contributors'
+    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    opacity={0.35}
+  />
+
+  <LocationMarker
+    onLocationSelect={onLocationSelect}
+    initialLocation={center}
+  />
+</MapContainer>
       </div>
     </div>
   );
