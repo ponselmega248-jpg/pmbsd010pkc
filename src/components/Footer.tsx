@@ -14,9 +14,11 @@ export default function Footer() {
               {settings?.logoSekolah ? (
                 <img src={settings.logoSekolah} alt="Logo Sekolah" className="h-10 w-auto object-contain bg-white p-1 rounded" referrerPolicy="no-referrer" />
               ) : (
-                <div className="bg-blue-600 p-2 rounded-lg text-white">
-                  <GraduationCap size={24} />
-                </div>
+                <img 
+                  src="/sdn010 logo.png" 
+                  alt="Logo" 
+                  className="h-10 w-10 rounded-lg object-cover"
+                />
               )}
               <span className="font-bold text-xl tracking-tight text-white">
                 {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}
