@@ -12,14 +12,19 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               {settings?.logoSekolah ? (
-                <img src={settings.logoSekolah} alt="Logo Sekolah" className="h-10 w-auto object-contain bg-white p-1 rounded" referrerPolicy="no-referrer" />
-              ) : (
-<img 
-  src="/sdn010 logo.png" 
-  alt="Logo" 
-  className="h-10 w-10 rounded-lg object-cover"
-/>
-              )}
+                  <img
+                    src={settings.logoSekolah}
+                    alt="Logo Sekolah"
+                    className="h-10 w-auto object-contain bg-white p-1 rounded"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <img
+                    src="/sdn010 logo.png"
+                    alt="Logo"
+                    className="h-10 w-10 rounded-lg object-cover"
+                  />
+                )}
               <span className="font-bold text-xl tracking-tight text-white">
                 {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}
               </span>
