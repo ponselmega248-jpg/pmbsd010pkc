@@ -19,7 +19,7 @@ export default function Footer() {
                 </div>
               )}
               <span className="font-bold text-xl tracking-tight text-white">
-                {settings?.namaSekolah || 'SDN Harapan Bangsa'}
+                {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
