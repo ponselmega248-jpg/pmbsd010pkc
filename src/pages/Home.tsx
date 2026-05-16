@@ -104,51 +104,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Profil Sekolah / Features */}
-      <section className="py-24 bg-slate-50 relative -mt-16 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            {[
-              {
-                icon: <BookOpen className="text-blue-500" size={32} />,
-                title: "Kurikulum Modern",
-                desc: "Menerapkan kurikulum merdeka belajar yang adaptif dengan perkembangan zaman dan teknologi."
-              },
-              {
-                icon: <Users className="text-green-500" size={32} />,
-                title: "Guru Profesional",
-                desc: "Dididik oleh tenaga pengajar tersertifikasi, berpengalaman, dan berdedikasi tinggi pada pendidikan."
-              },
-              {
-                icon: <Trophy className="text-amber-500" size={32} />,
-                title: "Fasilitas Lengkap",
-                desc: "Ruang kelas nyaman, perpustakaan digital, lab komputer, dan fasilitas olahraga yang memadai."
-              }
-            ].map((feature, idx) => (
-              <motion.div
-                key={idx}
-                variants={itemVariants}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow"
-              >
-                <div className="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center mb-6 border border-slate-100">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      
-
       {/* Alur PPDB */}
       <section id="alur" className="py-24 bg-slate-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2064&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
