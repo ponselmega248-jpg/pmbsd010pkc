@@ -26,11 +26,11 @@ export default function Navbar() {
             {settings?.logoSekolah ? (
               <img src={settings.logoSekolah} alt="Logo Sekolah" className="h-10 w-auto object-contain" referrerPolicy="no-referrer" />
             ) : (
-                  <img
-                    src="/sdn010-logo.png"
-                    alt="Logo"
-                    className="h-10 w-10 bg-white p-1 rounded-lg object-contain"
-                  />
+                <div><img 
+                  src="/sdn010 logo.png" 
+                  alt="Logo" 
+                  className="h-10 w-10 rounded-lg object-cover"
+                /></div
             )}
             <span className="font-bold text-xl tracking-tight text-slate-900">
               {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}
