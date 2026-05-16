@@ -14,14 +14,12 @@ export default function Footer() {
               {settings?.logoSekolah ? (
                 <img src={settings.logoSekolah} alt="Logo Sekolah" className="h-10 w-auto object-contain bg-white p-1 rounded" referrerPolicy="no-referrer" />
               ) : (
-                  <img
-                    src="/sdn010-logo.png"
-                    alt="Logo"
-                    className="h-10 w-10 bg-white p-1 rounded-lg object-contain"
-                  />
+                <div className="bg-blue-600 p-2 rounded-lg text-white">
+                  <GraduationCap size={24} />
+                </div>
               )}
               <span className="font-bold text-xl tracking-tight text-white">
-                {settings?.namaSekolah || 'SDN 010 Pangkalan kerinci'}
+                {settings?.namaSekolah || 'SDN Harapan Bangsa'}
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
@@ -43,22 +41,22 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-blue-500 shrink-0 mt-0.5" />
-                <span>{settings?.alamat || 'Jl. Bumi Lago Permai, Makmur, Kec. Pangkalan Kerinci, Kabupaten Pelalawan, Riau 28654'}</span>
+                <span>{settings?.alamat || 'Jl. Pendidikan No. 123, Kota Pelajar, Indonesia 12345'}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-blue-500 shrink-0" />
-                <span>{settings?.telepon || '+6285211058381'}</span>
+                <span>{settings?.telepon || '(021) 1234-5678'}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-blue-500 shrink-0" />
-                <span>{settings?.email || 'admin@sdn010pangkalankerinci.sch.id'}</span>
+                <span>{settings?.email || 'info@sdnharapanbangsa.sch.id'}</span>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="mt-12 pt-8 border-t border-slate-800 text-center text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center">
-          <p>&copy; {new Date().getFullYear()} {settings?.namaSekolah || 'SDN 010 Pangkalan kerinci'}. Hak Cipta Dilindungi.</p>
+          <p>&copy; {new Date().getFullYear()} {settings?.namaSekolah || 'SDN Harapan Bangsa'}. Hak Cipta Dilindungi.</p>
           <p className="mt-2 md:mt-0">Sistem PPDB Online Terintegrasi</p>
         </div>
       </div>
