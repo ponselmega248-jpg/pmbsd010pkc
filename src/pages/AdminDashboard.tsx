@@ -515,7 +515,7 @@ export default function AdminDashboard() {
                             {calculateAge(getFieldValue(item, 'Tanggal Lahir'), settings?.tanggalCutoffUsia)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            {item['Jarak ke Sekolah (km)'] ? `${item['Jarak ke Sekolah (km)']} km` : '-'}
+                            {getFieldValue(item, 'Jarak') ? `${getFieldValue(item, 'Jarak')} km` : '-'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-mono">
                             {getFieldValue(item, 'NIK') || '-'}
