@@ -272,7 +272,7 @@ export default function AdminDashboard() {
     const lineHeight = 10;
     
     doc.setFont("helvetica", "bold");
-    doc.text("No. Pendaftaran:", 20, startY);
+    doc.text(String(student['No Pendaftaran'] || '-'), 70, startY);
     doc.setFont("helvetica", "normal");
     doc.text(student['No Pendaftaran'], 70, startY);
 
@@ -282,7 +282,7 @@ export default function AdminDashboard() {
     doc.text(getFieldValue(student, 'Nama Lengkap') || '-', 70, startY + lineHeight);
 
     doc.setFont("helvetica", "bold");
-    doc.text("NIK:", 20, startY + lineHeight * 2);
+    doc.text(String(getFieldValue(student, 'NIK') || '-'), 70, startY + lineHeight * 2);
     doc.setFont("helvetica", "normal");
     doc.text(getFieldValue(student, 'NIK') || '-', 70, startY + lineHeight * 2);
 
@@ -294,7 +294,7 @@ export default function AdminDashboard() {
     doc.setFont("helvetica", "bold");
     doc.text("Usia:", 20, startY + lineHeight * 4);
     doc.setFont("helvetica", "normal");
-    doc.text(calculateAge(getFieldValue(student, 'Tanggal Lahir'), settings?.tanggalCutoffUsia), 70, startY + lineHeight * 4);
+    doc.text(String(calculateAge(getFieldValue(student, 'Tanggal Lahir'), settings?.tanggalCutoffUsia) || '-'), 70, startY + lineHeight * 4);
 
     doc.setFont("helvetica", "bold");
     doc.text("Status:", 20, startY + lineHeight * 5);
