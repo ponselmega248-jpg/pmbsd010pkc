@@ -272,19 +272,21 @@ export default function AdminDashboard() {
     const lineHeight = 10;
     
     doc.setFont("helvetica", "bold");
-    doc.text(String(student['No Pendaftaran'] || '-'), 70, startY);
+    doc.text("No. Pendaftaran:", 20, startY);
+
     doc.setFont("helvetica", "normal");
-    doc.text(student['No Pendaftaran'], 70, startY);
+    doc.text(String(student['No Pendaftaran'] || '-'), 70, startY);
 
     doc.setFont("helvetica", "bold");
     doc.text("Nama Lengkap:", 20, startY + lineHeight);
     doc.setFont("helvetica", "normal");
-    doc.text(getFieldValue(student, 'Nama Lengkap') || '-', 70, startY + lineHeight);
+    doc.text(String(getFieldValue(student, 'Nama Lengkap') || '-'), 70, startY + lineHeight);
 
     doc.setFont("helvetica", "bold");
-    doc.text(String(getFieldValue(student, 'NIK') || '-'), 70, startY + lineHeight * 2);
+    doc.text("NIK:", 20, startY + lineHeight * 2);
+
     doc.setFont("helvetica", "normal");
-    doc.text(getFieldValue(student, 'NIK') || '-', 70, startY + lineHeight * 2);
+    doc.text(String(getFieldValue(student, 'NIK') || '-'), 70, startY + lineHeight * 2);
 
     doc.setFont("helvetica", "bold");
     doc.text("TTL:", 20, startY + lineHeight * 3);
@@ -299,7 +301,7 @@ export default function AdminDashboard() {
     doc.setFont("helvetica", "bold");
     doc.text("Status:", 20, startY + lineHeight * 5);
     doc.setFont("helvetica", "normal");
-    doc.text(student.Status, 70, startY + lineHeight * 5);
+    doc.text(String(student.Status || '-'), 70, startY + lineHeight * 5);
 
     // Footer
     doc.setDrawColor(200, 200, 200);
