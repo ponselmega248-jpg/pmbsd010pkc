@@ -1,5 +1,6 @@
-```ts
-// Service to interact with Google Apps Script Backend
+// =========================================
+// GOOGLE APPS SCRIPT API SERVICE
+// =========================================
 
 const GAS_WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbyj-ZKxYPoGXpi4z3smgBcGBFNAzCyfnHg8ZncfH2lAS17m0wWGUHSPP722OxoQ54--/exec";
@@ -8,16 +9,20 @@ const GAS_WEB_APP_URL =
 const ADMIN_SECRET =
   "SDN010_PPDB_2026_X9kLp2QaM7vRt8Zw";
 
+// =========================================
+// TYPES
+// =========================================
+
 export interface FormField {
   id: string;
   label: string;
   type:
-    | 'text'
-    | 'number'
-    | 'select'
-    | 'date'
-    | 'file'
-    | 'textarea';
+    | "text"
+    | "number"
+    | "select"
+    | "date"
+    | "file"
+    | "textarea";
 
   options?: string[];
   required: boolean;
@@ -27,23 +32,20 @@ export interface RegistrationData {
   [key: string]: any;
 }
 
-export interface AdminData
-  extends RegistrationData {
-
+export interface AdminData extends RegistrationData {
   Timestamp: string;
 
-  'No Pendaftaran': string;
+  "No Pendaftaran": string;
 
   Status:
-    | 'Proses'
-    | 'Lulus'
-    | 'Tidak Lulus';
+    | "Proses"
+    | "Lulus"
+    | "Tidak Lulus";
 
-  'Alasan Penolakan'?: string;
+  "Alasan Penolakan"?: string;
 }
 
 export interface AppSettings {
-
   namaSekolah: string;
 
   alamat: string;
@@ -55,356 +57,308 @@ export interface AppSettings {
   deskripsi: string;
 
   statusPendaftaran:
-    | 'Buka'
-    | 'Tutup';
+    | "Buka"
+    | "Tutup";
 
   formFields: FormField[];
-
 }
 
-/**
- * =========================================
- * GET SETTINGS
- * =========================================
- */
+// =========================================
+// GET SETTINGS
+// =========================================
 
 export const getSettings =
-async (): Promise<AppSettings> => {
+  async (): Promise<AppSettings> => {
 
-  try {
+    try {
 
-    const response = await fetch(
-      `${GAS_WEB_APP_URL}?action=getSettings&t=${Date.now()}`
-    );
+      const response = await fetch(
+        `${GAS_WEB_APP_URL}?action=getSettings&t=${Date.now()}`
+      );
 
-    const result =
-      await response.json();
+      const result =
+        await response.json();
 
-    if (result.status === "success") {
+      if (result.status === "success") {
 
-      return {
+        return {
+          ...result.data,
 
-        ...result.data,
+          formFields:
+            typeof result.data.formFields === "string"
+              ? JSON.parse(result.data.formFields)
+              : result.data.formFields
+        };
 
-        formFields:
-          typeof result.data.formFields === "string"
-            ? JSON.parse(result.data.formFields)
-            : result.data.formFields
+      }
 
-      };
+      throw new Error(
+        result.message ||
+        "Gagal mengambil settings"
+      );
 
+    } catch (error) {
+
+      console.error(
+        "Error fetching settings:",
+        error
+      );
+
+      throw error;
     }
+  };
 
-    throw new Error(
-      result.message || "Gagal mengambil settings"
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Error fetching settings:",
-      error
-    );
-
-    throw error;
-
-  }
-
-};
-
-/**
- * =========================================
- * SUBMIT REGISTRATION
- * =========================================
- */
+// =========================================
+// SUBMIT REGISTRATION
+// =========================================
 
 export const submitRegistration =
-async (data: RegistrationData) => {
+  async (data: RegistrationData) => {
 
-  try {
+    try {
 
-    const response = await fetch(
-      GAS_WEB_APP_URL,
-      {
+      const response = await fetch(
+        GAS_WEB_APP_URL,
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-        body: JSON.stringify(data),
-
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
+          body: JSON.stringify(data)
         }
+      );
 
-      }
-    );
+      return await response.json();
 
-    return await response.json();
+    } catch (error) {
 
-  } catch (error) {
+      console.error(
+        "Error submitting registration:",
+        error
+      );
 
-    console.error(
-      "Error submitting registration:",
-      error
-    );
+      throw error;
+    }
+  };
 
-    throw error;
-
-  }
-
-};
-
-/**
- * =========================================
- * GET REGISTRATIONS
- * =========================================
- */
+// =========================================
+// GET REGISTRATIONS
+// =========================================
 
 export const getRegistrations =
-async (): Promise<AdminData[]> => {
+  async (): Promise<AdminData[]> => {
 
-  try {
+    try {
 
-    const response = await fetch(
-      `${GAS_WEB_APP_URL}?action=getRegistrations&adminSecret=${ADMIN_SECRET}&t=${Date.now()}`
-    );
+      const response = await fetch(
+        `${GAS_WEB_APP_URL}?action=getRegistrations&adminSecret=${ADMIN_SECRET}&t=${Date.now()}`
+      );
 
-    const result =
-      await response.json();
+      const result =
+        await response.json();
 
-    if (result.status === "success") {
-      return result.data;
+      if (result.status === "success") {
+        return result.data;
+      }
+
+      throw new Error(
+        result.message ||
+        "Gagal mengambil data"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Error fetching registrations:",
+        error
+      );
+
+      throw error;
     }
+  };
 
-    throw new Error(
-      result.message || "Gagal mengambil data"
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Error fetching registrations:",
-      error
-    );
-
-    throw error;
-
-  }
-
-};
-
-/**
- * =========================================
- * UPDATE STATUS
- * =========================================
- */
+// =========================================
+// UPDATE STATUS
+// =========================================
 
 export const updateStatus =
-async (
-  noPendaftaran: string,
-  newStatus: string,
-  alasan?: string
-) => {
+  async (
+    noPendaftaran: string,
+    newStatus: string,
+    alasan?: string
+  ) => {
 
-  try {
+    try {
 
-    const response = await fetch(
-      GAS_WEB_APP_URL,
-      {
+      const response = await fetch(
+        GAS_WEB_APP_URL,
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-        body: JSON.stringify({
+          body: JSON.stringify({
+            action: "updateStatus",
 
-          action: "updateStatus",
+            adminSecret:
+              ADMIN_SECRET,
 
-          adminSecret:
-            ADMIN_SECRET,
+            noPendaftaran,
 
-          noPendaftaran,
+            newStatus,
 
-          newStatus,
-
-          alasan
-
-        }),
-
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
+            alasan
+          })
         }
+      );
 
-      }
-    );
+      return await response.json();
 
-    return await response.json();
+    } catch (error) {
 
-  } catch (error) {
+      console.error(
+        "Error updating status:",
+        error
+      );
 
-    console.error(
-      "Error updating status:",
-      error
-    );
+      throw error;
+    }
+  };
 
-    throw error;
-
-  }
-
-};
-
-/**
- * =========================================
- * UPDATE SETTINGS
- * =========================================
- */
+// =========================================
+// UPDATE SETTINGS
+// =========================================
 
 export const updateSettings =
-async (
-  settings: Partial<AppSettings>
-) => {
+  async (
+    settings: Partial<AppSettings>
+  ) => {
 
-  try {
+    try {
 
-    const response = await fetch(
-      GAS_WEB_APP_URL,
-      {
+      const response = await fetch(
+        GAS_WEB_APP_URL,
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-        body: JSON.stringify({
+          body: JSON.stringify({
+            action: "updateSettings",
 
-          action: "updateSettings",
+            adminSecret:
+              ADMIN_SECRET,
 
-          adminSecret:
-            ADMIN_SECRET,
-
-          settings
-
-        }),
-
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
+            settings
+          })
         }
+      );
 
-      }
-    );
+      return await response.json();
 
-    return await response.json();
+    } catch (error) {
 
-  } catch (error) {
+      console.error(
+        "Error updating settings:",
+        error
+      );
 
-    console.error(
-      "Error updating settings:",
-      error
-    );
+      throw error;
+    }
+  };
 
-    throw error;
-
-  }
-
-};
-
-/**
- * =========================================
- * CHECK STATUS
- * =========================================
- */
+// =========================================
+// CHECK STATUS
+// =========================================
 
 export const checkStatus =
-async (
-  noPendaftaran: string
-) => {
+  async (
+    noPendaftaran: string
+  ) => {
 
-  try {
+    try {
 
-    const response = await fetch(
-      GAS_WEB_APP_URL,
-      {
+      const response = await fetch(
+        GAS_WEB_APP_URL,
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-        body: JSON.stringify({
+          body: JSON.stringify({
+            action: "checkStatus",
 
-          action: "checkStatus",
-
-          noPendaftaran
-
-        }),
-
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
+            noPendaftaran
+          })
         }
+      );
 
-      }
-    );
+      return await response.json();
 
-    return await response.json();
+    } catch (error) {
 
-  } catch (error) {
+      console.error(
+        "Error checking status:",
+        error
+      );
 
-    console.error(
-      "Error checking status:",
-      error
-    );
+      throw error;
+    }
+  };
 
-    throw error;
-
-  }
-
-};
-
-/**
- * =========================================
- * LOGIN ADMIN
- * =========================================
- */
+// =========================================
+// LOGIN ADMIN
+// =========================================
 
 export const loginAdmin =
-async (
-  username: string,
-  password: string
-) => {
+  async (
+    username: string,
+    password: string
+  ) => {
 
-  try {
+    try {
 
-    const response = await fetch(
-      GAS_WEB_APP_URL,
-      {
+      const response = await fetch(
+        GAS_WEB_APP_URL,
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-        body: JSON.stringify({
+          body: JSON.stringify({
+            action: "login",
 
-          action: "login",
+            username,
 
-          username,
-
-          password
-
-        }),
-
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
+            password
+          })
         }
+      );
 
-      }
-    );
+      return await response.json();
 
-    return await response.json();
+    } catch (error) {
 
-  } catch (error) {
+      console.error(
+        "Error logging in:",
+        error
+      );
 
-    console.error(
-      "Error logging in:",
-      error
-    );
-
-    throw error;
-
-  }
-
-};
-```
+      throw error;
+    }
+  };
