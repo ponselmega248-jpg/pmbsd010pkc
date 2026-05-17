@@ -51,19 +51,57 @@ export default function RegistrationForm() {
     reader.readAsDataURL(file);
   };
 
-  const handleLocationSelect = (lat: number, lng: number) => {
-    setMapLocation({ lat, lng });
-    setFormData(prev => ({ ...prev, 'Koordinat Lokasi': `${lat}, ${lng}` }));
-    
-    if (settings?.koordinatSekolah) {
-      const [schoolLat, schoolLng] = settings.koordinatSekolah.split(',').map(s => parseFloat(s.trim()));
-      if (!isNaN(schoolLat) && !isNaN(schoolLng)) {
-        const dist = calculateDistance(lat, lng, schoolLat, schoolLng);
-        setDistance(dist);
-        setFormData(prev => ({ ...prev, 'Jarak ke Sekolah (km)': dist.toFixed(2) }));
-      }
+const handleLocationSelect = (
+  lat: number,
+  lng: number
+) => {
+
+  setMapLocation({ lat, lng });
+
+  // Simpan koordinat sesuai GAS
+  setFormData(prev => ({
+    ...prev,
+
+    Latitude: lat,
+
+    Longitude: lng
+  }));
+
+  if (settings?.koordinatSekolah) {
+
+    const [schoolLat, schoolLng] =
+      settings.koordinatSekolah
+        .split(',')
+        .map(s => parseFloat(s.trim()));
+
+    if (
+      !isNaN(schoolLat) &&
+      !isNaN(schoolLng)
+    ) {
+
+      const dist =
+        calculateDistance(
+          lat,
+          lng,
+          schoolLat,
+          schoolLng
+        );
+
+      setDistance(dist);
+
+      // Simpan jarak sesuai header GAS
+      setFormData(prev => ({
+        ...prev,
+
+        Latitude: lat,
+
+        Longitude: lng,
+
+        Jarak: dist.toFixed(2)
+      }));
     }
-  };
+  }
+};
 
   const printProof = (noPendaftaran: string) => {
     const doc = new jsPDF();
@@ -300,7 +338,14 @@ export default function RegistrationForm() {
     }
   };
 
-  const textFields = settings?.formFields?.filter(f => f.type !== 'file') || [];
+  const textFields =
+  settings?.formFields?.filter(
+    f =>
+      f.type !== 'file' &&
+      f.id !== 'Latitude' &&
+      f.id !== 'Longitude' &&
+      f.id !== 'Jarak'
+  ) || [];
   const fileFields = settings?.formFields?.filter(f => f.type === 'file') || [];
 
   return (
