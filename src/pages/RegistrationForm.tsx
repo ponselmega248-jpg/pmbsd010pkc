@@ -51,57 +51,19 @@ export default function RegistrationForm() {
     reader.readAsDataURL(file);
   };
 
-const handleLocationSelect = (
-  lat: number,
-  lng: number
-) => {
-
-  setMapLocation({ lat, lng });
-
-  // Simpan koordinat sesuai GAS
-setFormData(prev => ({
-  ...prev,
-
-  ["Latitude"]: String(lat),
-
-  ["Longitude"]: String(lng),
-
-  ["Jarak"]: String(dist.toFixed(2))
-}));
-
-  if (settings?.koordinatSekolah) {
-
-    const [schoolLat, schoolLng] =
-      settings.koordinatSekolah
-        .split(',')
-        .map(s => parseFloat(s.trim()));
-
-    if (
-      !isNaN(schoolLat) &&
-      !isNaN(schoolLng)
-    ) {
-
-      const dist =
-        calculateDistance(
-          lat,
-          lng,
-          schoolLat,
-          schoolLng
-        );
-
-      setDistance(dist);
-
-      // Simpan jarak sesuai header GAS
-setFormData(prev => ({
-  ...prev,
-
-  ["Latitude"]: String(lat),
-
-  ["Longitude"]: String(lng)
-}));
+  const handleLocationSelect = (lat: number, lng: number) => {
+    setMapLocation({ lat, lng });
+    setFormData(prev => ({ ...prev, 'Koordinat Lokasi': `${lat}, ${lng}` }));
+    
+    if (settings?.koordinatSekolah) {
+      const [schoolLat, schoolLng] = settings.koordinatSekolah.split(',').map(s => parseFloat(s.trim()));
+      if (!isNaN(schoolLat) && !isNaN(schoolLng)) {
+        const dist = calculateDistance(lat, lng, schoolLat, schoolLng);
+        setDistance(dist);
+        setFormData(prev => ({ ...prev, 'Jarak ke Sekolah (km)': dist.toFixed(2) }));
+      }
     }
-  }
-};
+  };
 
   const printProof = (noPendaftaran: string) => {
     const doc = new jsPDF();
@@ -112,7 +74,7 @@ setFormData(prev => ({
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(22);
     doc.setFont("helvetica", "bold");
-    doc.text("BUKTI PENDAFTARAN SPMB", 105, 20, { align: "center" });
+    doc.text("BUKTI PENDAFTARAN PPDB", 105, 20, { align: "center" });
     doc.setFontSize(14);
     doc.setFont("helvetica", "normal");
     doc.text(settings?.namaSekolah || "SDN Harapan Bangsa", 105, 30, { align: "center" });
@@ -143,12 +105,7 @@ setFormData(prev => ({
     doc.setFont("helvetica", "normal");
     
     settings?.formFields?.forEach(field => {
-        if (
-    field.type !== 'file' &&
-    field.id !== 'Latitude' &&
-    field.id !== 'Longitude' &&
-    field.id !== 'Jarak'
-  ) {
+      if (field.type !== 'file') {
         doc.text(field.label, 20, startY);
         doc.text(":", 70, startY);
         let value = formData[field.label] || '-';
@@ -343,14 +300,7 @@ setFormData(prev => ({
     }
   };
 
-  const textFields =
-  settings?.formFields?.filter(
-    f =>
-      f.type !== 'file' &&
-      f.id !== 'Latitude' &&
-      f.id !== 'Longitude' &&
-      f.id !== 'Jarak'
-  ) || [];
+  const textFields = settings?.formFields?.filter(f => f.type !== 'file') || [];
   const fileFields = settings?.formFields?.filter(f => f.type === 'file') || [];
 
   return (
@@ -362,7 +312,7 @@ setFormData(prev => ({
           className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100"
         >
           <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-8 py-10 text-white text-center">
-            <h2 className="text-3xl font-bold mb-2">Formulir Pendaftaran SPMB</h2>
+            <h2 className="text-3xl font-bold mb-2">Formulir Pendaftaran PPDB</h2>
             <p className="text-blue-100">Lengkapi data diri calon peserta didik dengan benar dan valid.</p>
           </div>
 
