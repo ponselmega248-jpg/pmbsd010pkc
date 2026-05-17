@@ -59,13 +59,15 @@ const handleLocationSelect = (
   setMapLocation({ lat, lng });
 
   // Simpan koordinat sesuai GAS
-  setFormData(prev => ({
-    ...prev,
+setFormData(prev => ({
+  ...prev,
 
-    Latitude: lat,
+  ["Latitude"]: String(lat),
 
-    Longitude: lng
-  }));
+  ["Longitude"]: String(lng),
+
+  ["Jarak"]: String(dist.toFixed(2))
+}));
 
   if (settings?.koordinatSekolah) {
 
@@ -90,15 +92,13 @@ const handleLocationSelect = (
       setDistance(dist);
 
       // Simpan jarak sesuai header GAS
-      setFormData(prev => ({
-        ...prev,
+setFormData(prev => ({
+  ...prev,
 
-        Latitude: lat,
+  ["Latitude"]: String(lat),
 
-        Longitude: lng,
-
-        Jarak: dist.toFixed(2)
-      }));
+  ["Longitude"]: String(lng)
+}));
     }
   }
 };
