@@ -60,6 +60,8 @@ export interface AppSettings {
     | "Buka"
     | "Tutup";
 
+  koordinatSekolah?: string;
+
   formFields: FormField[];
 }
 
