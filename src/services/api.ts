@@ -1,7 +1,7 @@
 ```ts
 // Service to interact with Google Apps Script Backend
 
-const GAS_WEB_APP_URL = "";
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyj-ZKxYPoGXpi4z3smgBcGBFNAzCyfnHg8ZncfH2lAS17m0wWGUHSPP722OxoQ54--/exec";
 
 // HARUS SAMA DENGAN ADMIN_SECRET DI GOOGLE APPS SCRIPT
 const ADMIN_SECRET = "SDN010_PPDB_2026_X9kLp2QaM7vRt8Zw";
