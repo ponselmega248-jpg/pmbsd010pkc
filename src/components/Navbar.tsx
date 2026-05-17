@@ -26,14 +26,12 @@ export default function Navbar() {
             {settings?.logoSekolah ? (
               <img src={settings.logoSekolah} alt="Logo Sekolah" className="h-10 w-auto object-contain" referrerPolicy="no-referrer" />
             ) : (
-                <img
-                  src="/sdn010-logo.png"
-                  alt="Logo"
-                  className="h-10 w-10 bg-white p-1 rounded-lg object-contain"
-                />
+              <div className="bg-blue-600 p-2 rounded-lg text-white">
+                <GraduationCap size={24} />
+              </div>
             )}
             <span className="font-bold text-xl tracking-tight text-slate-900">
-              {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}
+              {settings?.namaSekolah || 'SDN Harapan Bangsa'}
             </span>
           </Link>
 

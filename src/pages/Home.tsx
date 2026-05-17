@@ -48,7 +48,7 @@ export default function Home() {
                 {!isClosed && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-3 w-3 ${isClosed ? 'bg-red-500' : 'bg-blue-500'}`}></span>
               </span>
-              {isClosed ? `Pendaftaran SPMB ${new Date().getFullYear()} Telah Ditutup` : `Pendaftaran SPMB ${new Date().getFullYear()} Telah Dibuka`}
+              {isClosed ? `Pendaftaran PPDB ${new Date().getFullYear()} Telah Ditutup` : `Pendaftaran PPDB ${new Date().getFullYear()} Telah Dibuka`}
             </motion.div>
             
             <motion.h1
@@ -69,7 +69,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed"
             >
-              Bergabunglah bersama {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}. Kami berkomitmen memberikan pendidikan dasar terbaik dengan fasilitas modern dan tenaga pendidik profesional.
+              Bergabunglah bersama {settings?.namaSekolah || 'SDN Harapan Bangsa'}. Kami berkomitmen memberikan pendidikan dasar terbaik dengan fasilitas modern dan tenaga pendidik profesional.
             </motion.p>
             
             <motion.div
@@ -97,8 +97,117 @@ export default function Home() {
                 href="#alur"
                 className="inline-flex justify-center items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-8 py-4 rounded-full text-lg font-semibold transition-all shadow-sm hover:shadow-md"
               >
-                Lihat Alur SPMB
+                Lihat Alur PPDB
               </a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Profil Sekolah / Features */}
+      <section className="py-24 bg-slate-50 relative -mt-16 z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                icon: <BookOpen className="text-blue-500" size={32} />,
+                title: "Kurikulum Modern",
+                desc: "Menerapkan kurikulum merdeka belajar yang adaptif dengan perkembangan zaman dan teknologi."
+              },
+              {
+                icon: <Users className="text-green-500" size={32} />,
+                title: "Guru Profesional",
+                desc: "Dididik oleh tenaga pengajar tersertifikasi, berpengalaman, dan berdedikasi tinggi pada pendidikan."
+              },
+              {
+                icon: <Trophy className="text-amber-500" size={32} />,
+                title: "Fasilitas Lengkap",
+                desc: "Ruang kelas nyaman, perpustakaan digital, lab komputer, dan fasilitas olahraga yang memadai."
+              }
+            ].map((feature, idx) => (
+              <motion.div
+                key={idx}
+                variants={itemVariants}
+                className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow"
+              >
+                <div className="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center mb-6 border border-slate-100">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Sambutan & Visi Misi */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                Sambutan Kepala Sekolah
+              </h2>
+              <div className="prose prose-lg text-slate-600">
+                {settings?.sambutanKepalaSekolah?.split('\n').map((paragraph, idx) => (
+                  <p key={idx} className="mb-4">
+                    {paragraph}
+                  </p>
+                ))}
+                <div className="flex items-center gap-4 mt-8">
+                  <div className="w-16 h-16 rounded-full bg-slate-200 overflow-hidden">
+                    <img src={settings?.fotoKepalaSekolah || "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&auto=format&fit=crop"} alt="Kepala Sekolah" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-900">{settings?.namaKepalaSekolah || 'Kepala Sekolah'}</h4>
+                    <p className="text-sm text-slate-500">Kepala Sekolah {settings?.namaSekolah}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-slate-50 rounded-3xl p-8 md:p-10 border border-slate-100"
+            >
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                <span className="bg-blue-100 text-blue-600 p-2 rounded-lg"><Trophy size={24} /></span>
+                Visi & Misi
+              </h3>
+              
+              <div className="mb-8">
+                <h4 className="text-lg font-semibold text-slate-800 mb-3">Visi</h4>
+                <p className="text-slate-600 italic bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                  "{settings?.visiSekolah || 'Visi sekolah belum diatur.'}"
+                </p>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-semibold text-slate-800 mb-3">Misi</h4>
+                <ul className="space-y-3">
+                  {(settings?.misiSekolah ? settings.misiSekolah.split('\n') : []).map((misi, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-slate-600">
+                      <CheckCircle2 className="text-green-500 shrink-0 mt-0.5" size={20} />
+                      <span>{misi.replace(/^\d+\.\s*/, '')}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -110,9 +219,9 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Alur Pendaftaran SPMB</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Alur Pendaftaran PPDB</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-              Ikuti langkah-langkah mudah berikut untuk mendaftarkan putra/putri Anda di SDN 010 Pangkalan Kerinci.
+              Ikuti langkah-langkah mudah berikut untuk mendaftarkan putra/putri Anda di SDN Harapan Bangsa.
             </p>
           </div>
 
