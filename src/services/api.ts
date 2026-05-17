@@ -3,7 +3,7 @@
 // =========================================
 
 const GAS_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbyj-ZKxYPoGXpi4z3smgBcGBFNAzCyfnHg8ZncfH2lAS17m0wWGUHSPP722OxoQ54--/exec";
+  "https://script.google.com/macros/s/AKfycbwV1tHUP1ajLKJvv8JMD3at733qD19Nbo1jtN-_PamogAP5eky2PX23pTnTewhKblWm/exec";
 
 // HARUS SAMA DENGAN SCRIPT PROPERTIES GAS
 const ADMIN_SECRET =
