@@ -177,9 +177,9 @@ export const getSettings = async (): Promise<AppSettings> => {
 
   try {
 
-    const response = await fetch(
-      `${GAS_WEB_APP_URL}?action=getSettings&t=${Date.now()}`
-    );
+      const response = await fetch(
+        `${GAS_WEB_APP_URL}?action=getSettings&t=${Date.now()}`
+      );
 
     const result = await response.json();
 
