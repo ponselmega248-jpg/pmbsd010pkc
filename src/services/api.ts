@@ -1,7 +1,8 @@
 // Service to interact with Google Apps Script Backend
 
 // To use the real backend, replace this URL with your deployed Google Apps Script Web App URL
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbze0ZtsveOfMPxxhnzj8TQ71-n2bkUeD3Jry3hH4uHSHG1G0bYboTnoDNHcb1Rjqk5ovQ/exec"; 
+const GAS_WEB_APP_URL = ""; 
+const ADMIN_SECRET = "SDN010_PPDB_2026_X9kLp2QaM7vRt8Zw";
 
 export interface FormField {
   id: string;
@@ -198,26 +199,55 @@ export const getSettings = async (): Promise<AppSettings> => {
   }
 };
 
-export const updateSettings = async (settings: Partial<AppSettings>) => {
+export const updateSettings = async (
+  settings: Partial<AppSettings>
+) => {
+
   if (!GAS_WEB_APP_URL) {
+
     await new Promise(resolve => setTimeout(resolve, 800));
-    saveMockSettings({ ...mockSettings, ...settings });
-    return { status: "success" };
-  }
-  try {
-    const response = await fetch(GAS_WEB_APP_URL, {
-      method: "POST",
-      body: JSON.stringify({
-        action: "updateSettings",
-        settings
-      }),
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
+
+    saveMockSettings({
+      ...mockSettings,
+      ...settings
     });
-    return await response.json();
-  } catch (error) {
-    console.error("Error updating settings:", error);
-    throw error;
+
+    return { status: "success" };
+
   }
+
+  try {
+
+    const response = await fetch(GAS_WEB_APP_URL, {
+
+      method: "POST",
+
+      body: JSON.stringify({
+
+        action: "updateSettings",
+
+        adminSecret: ADMIN_SECRET,
+
+        settings
+
+      }),
+
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+
+    });
+
+    return await response.json();
+
+  } catch (error) {
+
+    console.error("Error updating settings:", error);
+
+    throw error;
+
+  }
+
 };
 
 export const submitRegistration = async (data: RegistrationData) => {
@@ -230,7 +260,7 @@ export const submitRegistration = async (data: RegistrationData) => {
     const newEntry: AdminData = {
       ...data,
       Timestamp: new Date().toISOString(),
-      'No Pendaftaran': `PPDB-${year}-${String(mockData.length + 1).padStart(3, '0')}`,
+      'No Pendaftaran': `SPMB-${year}-${String(mockData.length + 1).padStart(3, '0')}`,
       Status: 'Proses'
     };
     saveMockData([...mockData, newEntry]);
@@ -250,13 +280,41 @@ export const submitRegistration = async (data: RegistrationData) => {
 };
 
 export const getRegistrations = async (): Promise<AdminData[]> => {
+
   if (!GAS_WEB_APP_URL) {
+
     await new Promise(resolve => setTimeout(resolve, 1000));
+
     return [...mockData];
+
   }
 
   try {
-    const response = await fetch(`${GAS_WEB_APP_URL}?t=${Date.now()}`);
+
+    const response = await fetch(
+      `${GAS_WEB_APP_URL}?action=getRegistrations&adminSecret=${ADMIN_SECRET}&t=${Date.now()}`
+    );
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      return result.data;
+    }
+
+    throw new Error(result.message);
+
+  } catch (error) {
+
+    console.error("Error fetching registrations:", error);
+
+    throw error;
+
+  }
+
+};
+
+  try {
+    const response = await fetch(`${GAS_WEB_APP_URL}?action=getRegistrations&t=${Date.now()}`);
     const result = await response.json();
     if (result.status === "success") {
       return result.data;
@@ -268,40 +326,81 @@ export const getRegistrations = async (): Promise<AdminData[]> => {
   }
 };
 
-export const updateStatus = async (noPendaftaran: string, newStatus: string, alasan?: string) => {
+export const updateStatus = async (
+  noPendaftaran: string,
+  newStatus: string,
+  alasan?: string
+) => {
+
   if (!GAS_WEB_APP_URL) {
+
     await new Promise(resolve => setTimeout(resolve, 800));
-    const index = mockData.findIndex(d => d['No Pendaftaran'] === noPendaftaran);
+
+    const index = mockData.findIndex(
+      d => d['No Pendaftaran'] === noPendaftaran
+    );
+
     if (index !== -1) {
+
       const newData = [...mockData];
-      newData[index] = { ...newData[index], Status: newStatus as any };
+
+      newData[index] = {
+        ...newData[index],
+        Status: newStatus as any
+      };
+
       if (alasan !== undefined) {
+
         newData[index]['Alasan Penolakan'] = alasan;
+
       }
+
       saveMockData(newData);
+
       return { status: "success" };
+
     }
+
     throw new Error("Data not found");
+
   }
 
   try {
+
     const response = await fetch(GAS_WEB_APP_URL, {
+
       method: "POST",
+
       body: JSON.stringify({
+
         action: "updateStatus",
+
+        adminSecret: ADMIN_SECRET,
+
         noPendaftaran,
+
         newStatus,
+
         alasan
+
       }),
+
       headers: {
         "Content-Type": "text/plain;charset=utf-8",
       },
+
     });
+
     return await response.json();
+
   } catch (error) {
+
     console.error("Error updating status:", error);
+
     throw error;
+
   }
+
 };
 
 export const checkStatus = async (noPendaftaran: string) => {
