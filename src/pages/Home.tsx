@@ -69,7 +69,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed"
             >
-              Bergabunglah bersama {settings?.namaSekolah || 'SDN Harapan Bangsa'}. Kami berkomitmen memberikan pendidikan dasar terbaik dengan fasilitas modern dan tenaga pendidik profesional.
+              Bergabunglah bersama {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}. Kami berkomitmen memberikan pendidikan dasar terbaik dengan fasilitas modern dan tenaga pendidik profesional.
             </motion.p>
             
             <motion.div
@@ -97,7 +97,7 @@ export default function Home() {
                 href="#alur"
                 className="inline-flex justify-center items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-8 py-4 rounded-full text-lg font-semibold transition-all shadow-sm hover:shadow-md"
               >
-                Lihat Alur PPDB
+                Lihat Alur SPMB
               </a>
             </motion.div>
           </div>
@@ -219,9 +219,9 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Alur Pendaftaran PPDB</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Alur Pendaftaran SPMB</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-              Ikuti langkah-langkah mudah berikut untuk mendaftarkan putra/putri Anda di SDN Harapan Bangsa.
+              Ikuti langkah-langkah mudah berikut untuk mendaftarkan putra/putri Anda di SDN 010 Pangkalan Kerinci.
             </p>
           </div>
 
