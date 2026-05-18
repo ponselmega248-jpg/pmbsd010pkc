@@ -34,7 +34,7 @@ function LocationMarker({ onLocationSelect, initialLocation }: MapPickerProps) {
 }
 
 export default function MapPicker({ onLocationSelect, initialLocation }: MapPickerProps) {
-  const defaultCenter = initialLocation || { lat: -6.200000, lng: 106.816666 };
+  const defaultCenter = initialLocation || { lat: 0.417124, lng: 101.853084 };
   const [center, setCenter] = useState<{lat: number, lng: number}>(defaultCenter);
   const [mapKey, setMapKey] = useState(0); // To force re-render MapContainer when center changes drastically
 
@@ -68,12 +68,22 @@ export default function MapPicker({ onLocationSelect, initialLocation }: MapPick
         Gunakan Lokasi Saat Ini
       </button>
       <div className="h-[300px] w-full rounded-lg overflow-hidden border border-slate-300 z-0 relative">
-        <MapContainer key={mapKey} center={[center.lat, center.lng]} zoom={15} scrollWheelZoom={false} className="h-full w-full z-0">
+      <MapContainer 
+          key={mapKey} 
+          center={[center.lat, center.lng]} 
+          zoom={15} 
+          scrollWheelZoom={false} 
+          className="h-full w-full z-0"
+        >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; Esri & OpenStreetMap contributors'
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           />
-          <LocationMarker onLocationSelect={onLocationSelect} initialLocation={center} />
+
+          <LocationMarker
+            onLocationSelect={onLocationSelect}
+            initialLocation={center}
+          />
         </MapContainer>
       </div>
     </div>
