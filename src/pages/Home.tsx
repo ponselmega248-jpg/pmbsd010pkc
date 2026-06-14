@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Users, Trophy, ChevronRight, CheckCircle2, Calendar, FileText, CheckSquare, AlertCircle } from 'lucide-react';
+import { BookOpen, ChevronRight, Calendar, FileText, CheckSquare, AlertCircle, CalendarDays, SearchCheck, Megaphone } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 
 export default function Home() {
@@ -48,7 +48,7 @@ export default function Home() {
                 {!isClosed && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-3 w-3 ${isClosed ? 'bg-red-500' : 'bg-blue-500'}`}></span>
               </span>
-              {isClosed ? `Pendaftaran PPDB ${new Date().getFullYear()} Telah Ditutup` : `Pendaftaran PPDB ${new Date().getFullYear()} Telah Dibuka`}
+              {isClosed ? `Pendaftaran SPMB ${new Date().getFullYear()} Telah Ditutup` : `Pendaftaran SPMB ${new Date().getFullYear()} Telah Dibuka`}
             </motion.div>
             
             <motion.h1
@@ -69,7 +69,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed"
             >
-              Bergabunglah bersama {settings?.namaSekolah || 'SDN 010 Pangkalan Kerinci'}. Kami berkomitmen memberikan pendidikan dasar terbaik dengan fasilitas modern dan tenaga pendidik profesional.
+              Bergabunglah bersama {settings?.namaSekolah || 'SDN 008 PKL KERINCI'}. Kami berkomitmen memberikan pendidikan dasar terbaik dengan fasilitas modern dan tenaga pendidik profesional.
             </motion.p>
             
             <motion.div
@@ -104,9 +104,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Profil Sekolah / Features */}
-      <section className="py-24 bg-slate-50 relative -mt-16 z-20">
+      {/* Informasi Waktu Pendaftaran SPMB */}
+      <section className="py-24 bg-slate-50 relative -mt-16 z-20 border-t border-slate-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Jadwal Pendaftaran SPMB 2026
+            </h2>
+            <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              Catat tanggal penting berikut dan persiapkan diri Anda untuk bergabung dengan {settings?.namaSekolah || 'SDN 008 Pkl Kerinci'}.
+            </p>
+          </div>
+
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -116,100 +126,68 @@ export default function Home() {
           >
             {[
               {
-                icon: <BookOpen className="text-blue-500" size={32} />,
-                title: "Kurikulum Modern",
-                desc: "Menerapkan kurikulum merdeka belajar yang adaptif dengan perkembangan zaman dan teknologi."
+                icon: <CalendarDays className="text-blue-500" size={32} />, 
+                title: "Pendaftaran Online",
+                prompt: "Periode Pendaftaran:", 
+                dateRange: "15 - 18 Juni",
+                year: "2026",
+                color: "text-blue-600", 
+                desc: "Pengisian formulir secara online dan unggah berkas pendaftaran calon peserta didik."
               },
               {
-                icon: <Users className="text-green-500" size={32} />,
-                title: "Guru Profesional",
-                desc: "Dididik oleh tenaga pengajar tersertifikasi, berpengalaman, dan berdedikasi tinggi pada pendidikan."
+                icon: <SearchCheck className="text-green-500" size={32} />, 
+                title: "Verifikasi & Validasi", 
+                prompt: "Periode Verifikasi:",
+                dateRange: "15 - 18 Juni",
+                year: "2026",
+                color: "text-green-600",
+                desc: "Pemeriksaan dan validasi keabsahan dokumen pendaftar oleh tim panitia sekolah."
               },
               {
-                icon: <Trophy className="text-amber-500" size={32} />,
-                title: "Fasilitas Lengkap",
-                desc: "Ruang kelas nyaman, perpustakaan digital, lab komputer, dan fasilitas olahraga yang memadai."
+                icon: <Megaphone className="text-amber-500" size={32} />, 
+                title: "Pengumuman & Daftar Ulang",
+                prompt: "Pengumuman Hasil:",
+                dateRange: "19 Juni",
+                year: "2026",
+                color: "text-amber-600",
+                desc: "Pengumuman hasil seleksi pada tanggal 19 Juni. Dilanjutkan daftar ulang pada 19 - 20 Juni 2026." 
               }
-            ].map((feature, idx) => (
+            ].map((schedule, idx) => (
               <motion.div
                 key={idx}
                 variants={itemVariants}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow"
+                className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200/60 hover:shadow-md hover:border-blue-100 transition-all duration-300 flex flex-col h-full group"
               >
-                <div className="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center mb-6 border border-slate-100">
-                  {feature.icon}
+                <div className="flex justify-between items-start mb-8">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center border border-slate-100 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    {schedule.icon}
+                  </div>
+                  <span className="text-xs font-bold text-slate-500 bg-slate-100 rounded-full px-3 py-1 border border-slate-200">
+                    Tahap {idx + 1}
+                  </span>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
+
+                <div className="flex-grow space-y-2 mb-6">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    {schedule.prompt}
+                  </p>
+                  <div className={`text-3xl lg:text-4xl font-black ${schedule.color} tracking-tight`}>
+                    {schedule.dateRange}
+                  </div>
+                  <div className="text-xl font-semibold text-slate-400 pt-1">{schedule.year}</div>
+                </div>
+
+                <div className="border-t border-slate-100 pt-6 mt-auto">
+                  <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    {schedule.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {schedule.desc}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </motion.div>
-        </div>
-      </section>
-
-      {/* Sambutan & Visi Misi */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                Sambutan Kepala Sekolah
-              </h2>
-              <div className="prose prose-lg text-slate-600">
-                {settings?.sambutanKepalaSekolah?.split('\n').map((paragraph, idx) => (
-                  <p key={idx} className="mb-4">
-                    {paragraph}
-                  </p>
-                ))}
-                <div className="flex items-center gap-4 mt-8">
-                  <div className="w-16 h-16 rounded-full bg-slate-200 overflow-hidden">
-                    <img src={settings?.fotoKepalaSekolah || "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&auto=format&fit=crop"} alt="Kepala Sekolah" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900">{settings?.namaKepalaSekolah || 'Kepala Sekolah'}</h4>
-                    <p className="text-sm text-slate-500">Kepala Sekolah {settings?.namaSekolah}</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-slate-50 rounded-3xl p-8 md:p-10 border border-slate-100"
-            >
-              <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                <span className="bg-blue-100 text-blue-600 p-2 rounded-lg"><Trophy size={24} /></span>
-                Visi & Misi
-              </h3>
-              
-              <div className="mb-8">
-                <h4 className="text-lg font-semibold text-slate-800 mb-3">Visi</h4>
-                <p className="text-slate-600 italic bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-                  "{settings?.visiSekolah || 'Visi sekolah belum diatur.'}"
-                </p>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-semibold text-slate-800 mb-3">Misi</h4>
-                <ul className="space-y-3">
-                  {(settings?.misiSekolah ? settings.misiSekolah.split('\n') : []).map((misi, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle2 className="text-green-500 shrink-0 mt-0.5" size={20} />
-                      <span>{misi.replace(/^\d+\.\s*/, '')}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
 
@@ -221,7 +199,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Alur Pendaftaran SPMB</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-              Ikuti langkah-langkah mudah berikut untuk mendaftarkan putra/putri Anda di SDN 010 Pangkalan Kerinci.
+              Ikuti langkah-langkah mudah berikut untuk mendaftarkan putra/putri Anda.
             </p>
           </div>
 
